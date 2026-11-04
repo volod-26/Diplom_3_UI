@@ -1,17 +1,22 @@
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from pages.base_page import BasePage
 from locators.login_page_locators import LoginPageLocators
+from locators.main_page_locators import MainPageLocators
+from config import LOGIN_URL
 
 
-class LoginPage:
+class LoginPage(BasePage):
     """Page Object для страницы логина"""
 
-    def __init__(self, driver):
-        self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+    def open_login_page(self):
+        self.open(LOGIN_URL)
 
     def login(self, email, password):
-        """Выполняет вход в систему"""
-        self.wait.until(EC.visibility_of_element_located(LoginPageLocators.EMAIL_INPUT)).send_keys(email)
-        self.driver.find_element(*LoginPageLocators.PASSWORD_INPUT).send_keys(password)
-        self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON).click()
+        self.fill(LoginPageLocators.EMAIL_INPUT, email)
+        self.fill(LoginPageLocators.PASSWORD_INPUT, password)
+        self.click(LoginPageLocators.LOGIN_BUTTON)
+
+    def click_login_link_on_register(self):
+        self.click(MainPageLocators.LOGIN_LINK_ON_REGISTER)
+
+    def click_restore_password_link(self):
+        self.click(MainPageLocators.RESTORE_PASSWORD_LINK)
