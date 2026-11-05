@@ -9,7 +9,8 @@ class TestLoginAndRegistration:
 
     @allure.title("Успешная регистрация")
     def test_successful_registration(self, driver):
-        driver.get(REGISTER_URL)
+        page = LoginPage(driver)
+        page.open(REGISTER_URL)
         assert "/register" in driver.current_url
 
     @allure.title("Вход по кнопке на главной")

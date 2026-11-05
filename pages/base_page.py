@@ -25,3 +25,6 @@ class BasePage:
 
     def get_text(self, locator):
         return self.wait.until(EC.visibility_of_element_located(locator)).text
+
+    def refresh(self):
+        self.driver.refresh()

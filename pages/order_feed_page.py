@@ -17,9 +17,9 @@ class OrderFeedPage(BasePage):
 
     def wait_for_today_counter_increase(self, old_count):
         for _ in range(10):
-            self.driver.refresh()
+            self.refresh()
             new_count = int(self.get_today_orders_count())
             if new_count > old_count:
                 return new_count
-            self.wait.until(lambda d: False)  # или просто time.sleep(1)
+            self.wait.until(lambda d: False)  # или time.sleep(1)
         return old_count
