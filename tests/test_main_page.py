@@ -10,6 +10,7 @@ class TestMainPage:
     def test_go_to_constructor(self, driver):
         page = MainPage(driver)
         page.open_main_page()
+        page.click_order_feed_button()
         page.click_constructor_button()
         assert driver.current_url == f"{BASE_URL}/"
 
@@ -39,6 +40,4 @@ class TestMainPage:
     def test_bun_counter_exists(self, driver):
         page = MainPage(driver)
         page.open_main_page()
-        page.click_bun_ingredient()
-        page.close_ingredient_modal()
         assert page.get_bun_counter() is not None

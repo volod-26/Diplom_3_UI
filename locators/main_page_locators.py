@@ -10,3 +10,4 @@ class MainPageLocators:
     INGREDIENT_MODAL = (By.XPATH, "//section[contains(@class, 'Modal_modal_opened')]")
     MODAL_CLOSE_BUTTON = (By.XPATH, "//button[contains(@class, 'Modal_modal__close')]")
     BUN_COUNTER = (By.XPATH, "//div[contains(@class, 'counter_counter')]")
+    CONSTRUCTOR_AREA = (By.XPATH, "//div[contains(@class, 'constructor-element_pos_top')]")

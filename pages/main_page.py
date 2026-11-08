@@ -45,3 +45,11 @@ class MainPage(BasePage):
     @allure.step("Получить значение счётчика ингредиента")
     def get_bun_counter(self):
         return self.get_text(MainPageLocators.BUN_COUNTER)
+
+    @allure.step("Перетащить булку в конструктор")
+    def drag_and_drop_bun(self):
+        from selenium.webdriver.common.action_chains import ActionChains
+        element = self.wait.until(EC.presence_of_element_located(MainPageLocators.BUN_INGREDIENT))
+        target = self.wait.until(EC.presence_of_element_located(MainPageLocators.CONSTRUCTOR_AREA))
+        actions = ActionChains(self.driver)
+        actions.drag_and_drop(element, target).perform()
