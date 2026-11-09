@@ -17,6 +17,10 @@ class BasePage:
     def find(self, locator):
         return self.wait.until(EC.presence_of_element_located(locator))
 
+    @allure.step("Найти все элементы")
+    def find_all(self, locator):
+        return self.wait.until(lambda d: d.find_elements(*locator))
+
     @allure.step("Кликнуть по элементу")
     def click(self, locator):
         element = self.wait.until(EC.presence_of_element_located(locator))

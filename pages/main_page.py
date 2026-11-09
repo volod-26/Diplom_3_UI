@@ -2,7 +2,6 @@ import allure
 from pages.base_page import BasePage
 from locators.main_page_locators import MainPageLocators
 from config import BASE_URL
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class MainPage(BasePage):
@@ -28,8 +27,7 @@ class MainPage(BasePage):
 
     @allure.step("Кликнуть на ингредиент")
     def click_bun_ingredient(self):
-        element = self.wait.until(EC.presence_of_element_located(MainPageLocators.BUN_INGREDIENT))
-        self.driver.execute_script("arguments[0].click();", element)
+        self.click(MainPageLocators.BUN_INGREDIENT)
 
     @allure.step("Проверить, что модалка ингредиента видима")
     def is_ingredient_modal_visible(self):

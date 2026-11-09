@@ -1,9 +1,14 @@
 import allure
 from pages.base_page import BasePage
 from locators.order_feed_locators import OrderFeedLocators
+from config import FEED_URL
 
 
 class OrderFeedPage(BasePage):
+    @allure.step("Открыть ленту заказов")
+    def open_order_feed(self):
+        self.open(FEED_URL)
+
     @allure.step("Получить счётчик «Выполнено за всё время»")
     def get_total_orders_count(self):
         return self.get_text(OrderFeedLocators.TOTAL_ORDERS_COUNTER)
@@ -14,9 +19,7 @@ class OrderFeedPage(BasePage):
 
     @allure.step("Получить список заказов в работе")
     def get_orders_in_progress(self):
-        elements = self.wait.until(
-            lambda d: d.find_elements(*OrderFeedLocators.ORDERS_IN_PROGRESS)
-        )
+        elements = self.find_all(OrderFeedLocators.ORDERS_IN_PROGRESS)
         return [el.text for el in elements]
 
     @allure.step("Дождаться увеличения счётчика «за всё время»")

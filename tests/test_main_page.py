@@ -1,3 +1,4 @@
+import pytest
 import allure
 from pages.main_page import MainPage
 from config import BASE_URL
@@ -36,8 +37,12 @@ class TestMainPage:
         page.close_ingredient_modal()
         assert not page.is_ingredient_modal_visible()
 
-    @allure.title("Счётчик ингредиента существует")
-    def test_bun_counter_exists(self, driver):
+    @allure.title("Счётчик ингредиента увеличивается после добавления")
+    @pytest.mark.xfail(reason="Drag&Drop не работает в React через Selenium")
+    def test_bun_counter_increases(self, driver):
         page = MainPage(driver)
         page.open_main_page()
-        assert page.get_bun_counter() is not None
+        old_counter = page.get_bun_counter()
+        page.drag_and_drop_bun()
+        new_counter = page.get_bun_counter()
+        assert int(new_counter) > int(old_counter)
