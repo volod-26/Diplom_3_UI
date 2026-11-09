@@ -1,6 +1,7 @@
 import allure
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class BasePage:
@@ -20,7 +21,6 @@ class BasePage:
     def click(self, locator):
         element = self.wait.until(EC.presence_of_element_located(locator))
         self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
-        self.wait.until(EC.element_to_be_clickable(locator))
         self.driver.execute_script("arguments[0].click();", element)
 
     @allure.step("Заполнить поле")
@@ -36,3 +36,14 @@ class BasePage:
     @allure.step("Обновить страницу")
     def refresh(self):
         self.driver.refresh()
+
+    @allure.step("Получить текущий URL")
+    def get_current_url(self):
+        return self.driver.current_url
+
+    @allure.step("Перетащить элемент")
+    def drag_and_drop(self, source_locator, target_locator):
+        source = self.wait.until(EC.presence_of_element_located(source_locator))
+        target = self.wait.until(EC.presence_of_element_located(target_locator))
+        actions = ActionChains(self.driver)
+        actions.drag_and_drop(source, target).perform()

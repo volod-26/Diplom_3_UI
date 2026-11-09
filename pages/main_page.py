@@ -48,8 +48,4 @@ class MainPage(BasePage):
 
     @allure.step("Перетащить булку в конструктор")
     def drag_and_drop_bun(self):
-        from selenium.webdriver.common.action_chains import ActionChains
-        element = self.wait.until(EC.presence_of_element_located(MainPageLocators.BUN_INGREDIENT))
-        target = self.wait.until(EC.presence_of_element_located(MainPageLocators.CONSTRUCTOR_AREA))
-        actions = ActionChains(self.driver)
-        actions.drag_and_drop(element, target).perform()
+        self.drag_and_drop(MainPageLocators.BUN_INGREDIENT, MainPageLocators.CONSTRUCTOR_AREA)

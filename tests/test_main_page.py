@@ -12,14 +12,14 @@ class TestMainPage:
         page.open_main_page()
         page.click_order_feed_button()
         page.click_constructor_button()
-        assert driver.current_url == f"{BASE_URL}/"
+        assert page.get_current_url() == f"{BASE_URL}/"
 
     @allure.title("Переход в «Ленту заказов»")
     def test_go_to_order_feed(self, driver):
         page = MainPage(driver)
         page.open_main_page()
         page.click_order_feed_button()
-        assert "feed" in driver.current_url
+        assert "feed" in page.get_current_url()
 
     @allure.title("Открытие модалки ингредиента")
     def test_open_ingredient_modal(self, driver):

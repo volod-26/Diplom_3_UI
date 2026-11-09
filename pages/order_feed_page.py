@@ -19,6 +19,15 @@ class OrderFeedPage(BasePage):
         )
         return [el.text for el in elements]
 
+    @allure.step("Дождаться увеличения счётчика «за всё время»")
+    def wait_for_total_counter_increase(self, old_count):
+        for _ in range(10):
+            self.refresh()
+            new_count = int(self.get_total_orders_count())
+            if new_count > old_count:
+                return new_count
+            self.wait.until(lambda d: False)
+
     @allure.step("Дождаться увеличения счётчика «за сегодня»")
     def wait_for_today_counter_increase(self, old_count):
         for _ in range(10):
@@ -27,4 +36,3 @@ class OrderFeedPage(BasePage):
             if new_count > old_count:
                 return new_count
             self.wait.until(lambda d: False)
-        return old_count
