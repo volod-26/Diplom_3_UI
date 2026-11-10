@@ -2,6 +2,7 @@ import allure
 from pages.base_page import BasePage
 from locators.order_feed_locators import OrderFeedLocators
 from config import FEED_URL
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class OrderFeedPage(BasePage):
@@ -29,7 +30,7 @@ class OrderFeedPage(BasePage):
             new_count = int(self.get_total_orders_count())
             if new_count > old_count:
                 return new_count
-            self.wait.until(lambda d: False)
+            self.wait_until(lambda d: False)
 
     @allure.step("Дождаться увеличения счётчика «за сегодня»")
     def wait_for_today_counter_increase(self, old_count):
@@ -38,4 +39,4 @@ class OrderFeedPage(BasePage):
             new_count = int(self.get_today_orders_count())
             if new_count > old_count:
                 return new_count
-            self.wait.until(lambda d: False)
+            self.wait_until(lambda d: False)

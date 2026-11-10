@@ -44,6 +44,7 @@ class MainPage(BasePage):
     def get_bun_counter(self):
         return self.get_text(MainPageLocators.BUN_COUNTER)
 
-    @allure.step("Перетащить булку в конструктор")
+    @allure.step("Перетащить булку в конструктор (два клика)")
     def drag_and_drop_bun(self):
-        self.drag_and_drop(MainPageLocators.BUN_INGREDIENT, MainPageLocators.CONSTRUCTOR_AREA)
+        self.click(MainPageLocators.BUN_INGREDIENT)
+        self.click(MainPageLocators.CONSTRUCTOR_AREA)

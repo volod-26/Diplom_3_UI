@@ -51,3 +51,7 @@ class BasePage:
         target = self.wait.until(EC.presence_of_element_located(target_locator))
         actions = ActionChains(self.driver)
         actions.drag_and_drop(source, target).perform()
+
+    @allure.step("Дождаться условия")
+    def wait_until(self, condition):
+        return self.wait.until(condition)
