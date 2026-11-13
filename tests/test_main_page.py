@@ -1,4 +1,3 @@
-import pytest
 import allure
 from pages.main_page import MainPage
 from config import BASE_URL
@@ -38,7 +37,6 @@ class TestMainPage:
         assert not page.is_ingredient_modal_visible()
 
     @allure.title("Счётчик ингредиента увеличивается после добавления")
-    @pytest.mark.xfail(reason="Drag&Drop не работает в React-компоненте Stellar Burgers")
     def test_bun_counter_increases(self, driver):
         page = MainPage(driver)
         page.open_main_page()

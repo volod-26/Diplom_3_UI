@@ -2,7 +2,6 @@ import allure
 from pages.base_page import BasePage
 from locators.order_feed_locators import OrderFeedLocators
 from config import FEED_URL
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class OrderFeedPage(BasePage):
@@ -22,6 +21,14 @@ class OrderFeedPage(BasePage):
     def get_orders_in_progress(self):
         elements = self.find_all(OrderFeedLocators.ORDERS_IN_PROGRESS)
         return [el.text for el in elements]
+
+    @allure.step("Дождаться появления заказа в разделе «В работе»")
+    def wait_for_order_in_progress(self, order_number):
+        def order_is_present(d):
+            self.refresh()
+            orders = self.get_orders_in_progress()
+            return order_number in orders
+        self.wait_until(order_is_present)
 
     @allure.step("Дождаться увеличения счётчика «за всё время»")
     def wait_for_total_counter_increase(self, old_count):

@@ -1,5 +1,4 @@
 import allure
-import time
 from pages.order_feed_page import OrderFeedPage
 import helpers
 
@@ -50,13 +49,7 @@ class TestOrderFeed:
 
         page = OrderFeedPage(driver)
         page.open_order_feed()
+        page.wait_for_order_in_progress(order_number)
 
-        orders_in_progress = []
-        for _ in range(10):
-            time.sleep(1)
-            page.refresh()
-            orders_in_progress = page.get_orders_in_progress()
-            if order_number in orders_in_progress:
-                break
-
-        assert order_number in orders_in_progress, f"Заказ {order_number} не найден. В работе: {orders_in_progress}"
+        orders_in_progress = page.get_orders_in_progress()
+        assert order_number in orders_in_progress
