@@ -2,7 +2,6 @@ import allure
 from pages.base_page import BasePage
 from locators.main_page_locators import MainPageLocators
 from config import BASE_URL
-from selenium.webdriver.support import expected_conditions as EC
 
 
 class MainPage(BasePage):
@@ -45,19 +44,6 @@ class MainPage(BasePage):
     def get_bun_counter(self):
         return self.get_text(MainPageLocators.BUN_COUNTER)
 
-    @allure.step("Перетащить булку в конструктор (через JS-события)")
+    @allure.step("Перетащить булку в конструктор")
     def drag_and_drop_bun(self):
-        source = self.wait.until(EC.presence_of_element_located(MainPageLocators.BUN_INGREDIENT_JS))
-        target = self.wait.until(EC.presence_of_element_located(MainPageLocators.CONSTRUCTOR_AREA))
-
-        self.driver.execute_script("""
-            var source = arguments[0];
-            var target = arguments[1];
-            var dataTransfer = new DataTransfer();
-            var dragStartEvent = new DragEvent('dragstart', { dataTransfer: dataTransfer, bubbles: true });
-            var dragOverEvent = new DragEvent('dragover', { dataTransfer: dataTransfer, bubbles: true });
-            var dropEvent = new DragEvent('drop', { dataTransfer: dataTransfer, bubbles: true });
-            source.dispatchEvent(dragStartEvent);
-            target.dispatchEvent(dragOverEvent);
-            target.dispatchEvent(dropEvent);
-        """, source, target)
+        self.drag_and_drop_js(MainPageLocators.BUN_INGREDIENT_JS, MainPageLocators.CONSTRUCTOR_AREA)

@@ -45,12 +45,21 @@ class BasePage:
     def get_current_url(self):
         return self.driver.current_url
 
-    @allure.step("Перетащить элемент")
-    def drag_and_drop(self, source_locator, target_locator):
+    @allure.step("Перетащить элемент через JS-события")
+    def drag_and_drop_js(self, source_locator, target_locator):
         source = self.wait.until(EC.presence_of_element_located(source_locator))
         target = self.wait.until(EC.presence_of_element_located(target_locator))
-        actions = ActionChains(self.driver)
-        actions.drag_and_drop(source, target).perform()
+        self.driver.execute_script("""
+            var source = arguments[0];
+            var target = arguments[1];
+            var dataTransfer = new DataTransfer();
+            var dragStartEvent = new DragEvent('dragstart', { dataTransfer: dataTransfer, bubbles: true });
+            var dragOverEvent = new DragEvent('dragover', { dataTransfer: dataTransfer, bubbles: true });
+            var dropEvent = new DragEvent('drop', { dataTransfer: dataTransfer, bubbles: true });
+            source.dispatchEvent(dragStartEvent);
+            target.dispatchEvent(dragOverEvent);
+            target.dispatchEvent(dropEvent);
+        """, source, target)
 
     @allure.step("Дождаться условия")
     def wait_until(self, condition):
